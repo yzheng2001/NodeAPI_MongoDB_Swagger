@@ -1,0 +1,267 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "This document provides the details of Redis Cache APIs for almanac application to get cached data",
+      "version": "1.0.0",
+      "title": "Almanac Redis Cache API",
+      "contact": {
+        "email": "yu_zheng@amat.com"
+      }
+    },
+    "host": "localhost:3000",    
+    "schemes": ["http"],
+    "tags": [
+      {
+        "name": "blog",
+        "description": "blog related operations to access mongodb"
+      }
+    ], 
+    "paths": {
+      "/all-blogs":{
+          "get": {
+              "tags": [
+                  "blog"
+              ],
+              "summary": "Gets all blogs",
+              "operationId": "getAllBlogs",
+              "produces": [
+                  "application/json"
+              ],
+              "responses": {
+                  "200": {
+                  "description": "successful operation",
+                  "schema": {
+                      "type": "array",
+                      "items": {
+                      "$ref": "#/definitions/blog"
+                      }
+                  }
+                  },
+                  "400": {
+                  "description": "fail to get blogs value"
+                  }
+              }
+          }
+      },
+      
+      "/blog/{strTitle}": {
+        "get": {
+            "tags": [
+                "blog"
+            ],
+            "summary": "Get blog by title",
+            "description": "",
+            "operationId": "get_blog_by_title",
+            "produces": [
+                "application/json"
+            ],
+            "parameters": [
+                {
+                "name": "strTitle",
+                "in": "path",
+                "description": "The name that needs to be fetched.",
+                "required": true,
+                "type": "string"
+                }
+            ],
+            "responses": {
+                "200": {
+                "description": "successful operation",
+                "schema": {
+                    "$ref": "#/definitions/blog"
+                }
+                },
+                "400": {
+                "description": "Invalid title supplied"
+                }
+            }
+        }   
+      },
+      "/blog":{
+        "delete": {
+          "tags": [
+            "blog"
+          ],
+          "summary": "Delete blog based on name",
+          "description": "delete blog //only be done by the super admin.",
+          "operationId": "delete_blog",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "strTitle",
+              "in": "query",
+              "description": "blog title",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/definitions/blog"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input"
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          } 
+        }        
+      },
+      
+      "/update-blog/{strTitle}": {
+        "put":{
+          "tags": [
+            "blog"
+          ],
+          "summary": "Updated Blog according to title",
+          "description": "This can only be done if 1 matching title blog is found.",
+          "operationId": "update_Blog",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "name": "strTitle",
+              "in": "path",
+              "description": "The title that needs to be fetched.",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Blog object with new values",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/blog"
+              }
+            }
+          ],
+          "responses": {
+            "400": {
+              "description": "Invalid blog supplied"
+            }
+          }
+        }
+      },
+      "/add-blog":{
+        "post": {
+          "tags": [
+            "blog"
+          ],
+          "summary": "Creates blog if title not exist yet",
+          "operationId": "create_blog",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "new blog object",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/blog"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "successful operation",
+              "schema": {
+                "$ref": "#/definitions/blog"
+              }
+            },
+            "400": {
+              "description": "Bad request"
+            }
+          }
+        }    
+      }, 
+      "/more/getablog":{      
+          "get": {
+              "tags": [
+                  "blog"
+              ],
+              "summary": "testing get under router",
+              "operationId": "getSth",
+              "produces": [
+                  "application/json"
+              ],
+              "responses": {
+                  "200": {
+                    "description": "successful operation"
+                  },
+                  "400": {
+                    "description": "fail to get blogs value"
+                  }
+              }
+          }
+      },      
+      "/more/blog":{      
+          "delete": {
+              "tags": [
+                  "blog"
+              ],
+              "summary": "testing delete under router",
+              "operationId": "get delete",
+              "produces": [
+                  "application/json"
+              ],
+              "parameters": [
+                {
+                  "name": "strTitle",
+                  "in": "query",
+                  "description": "blog title",
+                  "required": true,
+                  "type": "string"
+                }
+              ],
+              "responses": {
+                  "200": {
+                    "description": "successful operation"
+                  },
+                  "400": {
+                    "description": "fail to get blogs value"
+                  }
+              }
+          }
+      }            
+    },
+    "securityDefinitions":{
+      "Bearer":{
+        "type": "apiKey",
+        "name":"Authorization",
+        "in": "header"
+      }
+    },
+    "security": [
+      {"Bearer":[]}
+    ],
+    "definitions": {
+      "blog": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "snippet": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          }
+        }
+      }
+    }
+}

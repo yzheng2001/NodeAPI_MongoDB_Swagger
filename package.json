@@ -1,0 +1,22 @@
+{
+  "name": "demonodemongoapi",
+  "version": "1.0.0",
+  "description": "test API with Mongo db",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon server.js",
+    "app": "nodemon app.js"
+  },
+  "author": "Christina Zheng",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jwt-decode": "^4.0.0",
+    "mongoose": "^8.4.0",
+    "nodemon": "^3.1.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
